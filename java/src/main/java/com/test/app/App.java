@@ -52,9 +52,13 @@ public class App {
 
         String resourceGroupForMsi = random("rg", 12);
 
+        System.out.println("Creating resource group for msi ...");
+
         ResourceGroup msiResourceGroup = azure.resourceGroups().define(resourceGroupForMsi)
                 .withRegion(region)
                 .create();
+
+        System.out.println("Creating user assigned identity ...");
 
         Identity identity = azure.identities().define(identityName)
                 .withRegion(region)
@@ -62,6 +66,8 @@ public class App {
                 .withAccessTo(msiResourceGroup, BuiltInRole.CONTRIBUTOR)
                 .withAccessToCurrentResourceGroup(BuiltInRole.CONTRIBUTOR)
                 .create();
+
+        System.out.println("Creating managed cluster ...");
 
         ManagedClusterInner managedCluster = new ManagedClusterInner()
                 .withAgentPoolProfiles(Collections.singletonList(
@@ -92,6 +98,8 @@ public class App {
 
         managedCluster = azure.kubernetesClusters().manager().serviceClient().getManagedClusters().createOrUpdate(rgName, aksName, managedCluster);
 
+        System.out.println("Updating managed cluster ...");
+
         managedCluster.withPodIdentityProfile(
                 managedCluster.podIdentityProfile()
                     .withUserAssignedIdentities(Collections.singletonList(
@@ -102,6 +110,8 @@ public class App {
                     ))
         );
         managedCluster = azure.kubernetesClusters().manager().serviceClient().getManagedClusters().createOrUpdate(rgName, aksName, managedCluster);
+
+        System.out.println("Downloading managed cluster credentials ...");
 
         String test_pod_template = new String(Files.readAllBytes(new File("test-pod.template.yml").toPath()), StandardCharsets.UTF_8);
         String test_pod = String.format(test_pod_template, azure.subscriptionId(), resourceGroupForMsi, identity.clientId());

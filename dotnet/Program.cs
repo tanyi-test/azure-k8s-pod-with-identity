@@ -43,9 +43,13 @@ namespace test
 
             var resourceGroupForMsi = randomString("rg", 12);
 
+            Console.WriteLine("Creating resource group for msi ...");
+
             var msiResourceGroup = await containerServiceManager.ResourceManager.ResourceGroups.Define(resourceGroupForMsi)
                 .WithRegion(region)
                 .CreateAsync(cancellationToken);
+
+            Console.WriteLine("Creating user assigned identity ...");
 
             var identity = await msiManager.Identities.Define(identityName)
                 .WithRegion(region)
@@ -53,6 +57,8 @@ namespace test
                 .WithAccessTo(msiResourceGroup, BuiltInRole.Contributor)
                 .WithAccessToCurrentResourceGroup(BuiltInRole.Contributor)
                 .CreateAsync(cancellationToken);
+
+            Console.WriteLine("Creating managed cluster ...");
 
             var managedCluster = new ManagedClusterInner()
             {
@@ -89,6 +95,8 @@ namespace test
 
             managedCluster = await containerServiceManager.KubernetesClusters.Inner.CreateOrUpdateAsync(rgName, aksName, managedCluster, cancellationToken);
 
+            Console.WriteLine("Updating managed cluster ...");
+
             managedCluster.PodIdentityProfile.UserAssignedIdentities = new List<ManagedClusterPodIdentity>()
             {
                 new ManagedClusterPodIdentity()
@@ -105,6 +113,8 @@ namespace test
             };
 
             managedCluster = await containerServiceManager.KubernetesClusters.Inner.CreateOrUpdateAsync(rgName, aksName, managedCluster, cancellationToken);
+
+            Console.WriteLine("Downloading managed cluster credentials ...");
 
             var test_pod_template = await download("https://github.com/tanyi-test/azure-k8s-pod-with-identity/raw/master/dotnet/test-pod.template.yml");
             var test_pod = string.Format(test_pod_template, credentials.DefaultSubscriptionId, resourceGroupForMsi, identity.ClientId);
