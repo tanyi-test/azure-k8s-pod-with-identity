@@ -12,6 +12,8 @@ See [DefaultAzureCredential](https://github.com/Azure/azure-sdk-for-java/tree/ma
 
 For more details on authentication, please refer to [AUTH.md](https://github.com/Azure/azure-sdk-for-java/blob/master/sdk/resourcemanager/docs/AUTH.md).
 
+Program running inside [pod](test-pod.template.yml#L14): https://github.com/Azure-Samples/compute-java-manage-vm-from-vm-with-msi-credentials
+
 ```bash
 mvn clean compile exec:java # create identity and AKS, also write test-pod.yml and test.kubeconfig
 kubectl apply -f test-pod.yml --kubeconfig test.kubeconfig
