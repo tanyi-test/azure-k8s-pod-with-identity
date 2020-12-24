@@ -12,5 +12,5 @@ spec:
       args:
         - -c
         - apt update; apt install -y git maven; git clone https://github.com/Azure-Samples/compute-java-manage-vm-from-vm-with-msi-credentials; cd compute-java-manage-vm-from-vm-with-msi-credentials; mvn clean compile exec:java -Dexec.args="%s %s %s"; tail -f /dev/nulls
-  nodeSeletor:
+  nodeSelector:
     kubernetes.io/os: linux

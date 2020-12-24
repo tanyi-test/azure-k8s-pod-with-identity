@@ -11,6 +11,6 @@ spec:
       command: ["bash"]
       args:
         - -c
-        - apt update; apt install -y git wget apt-transport-https; wget https://packages.microsoft.com/config/debian/10/packages-microsoft-prod.deb -O packages-microsoft-prod.deb; dpkg -i packages-microsoft-prod.deb; apt update; apt install -y dotnet-sdk-5.0; git clone --branch msi-net5.0 https://github.com/tanyi-test/azure-libraries-for-net-staging; cd azure-libraries-for-net-staging; dotnet run {0} {1} {2}; tail -f /dev/nulls
-  nodeSeletor:
+        - apt update; apt install -y git wget apt-transport-https; wget https://packages.microsoft.com/config/debian/10/packages-microsoft-prod.deb -O packages-microsoft-prod.deb; dpkg -i packages-microsoft-prod.deb; apt update; apt install -y dotnet-sdk-5.0; git clone --branch msi-net5.0 https://github.com/tanyi-test/azure-libraries-for-net-staging; cd azure-libraries-for-net-staging; dotnet run {0} {1} {2}; tail -f /dev/null
+  nodeSelector:
     kubernetes.io/os: linux

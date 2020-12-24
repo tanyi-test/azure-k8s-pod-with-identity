@@ -15,7 +15,7 @@ For more details on authentication, please refer to [AUTH.md](https://github.com
 ```bash
 mvn clean compile exec:java # create identity and AKS, also write test-pod.yml and test.kubeconfig
 kubectl apply -f test-pod.yml --kubeconfig test.kubeconfig
-kubectl logs -f test
+kubectl logs -f test --kubeconfig test.kubeconfig
 ``` 
 
 ### Already has AKS with identity
