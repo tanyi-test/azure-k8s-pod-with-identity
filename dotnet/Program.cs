@@ -43,13 +43,14 @@ namespace test
 
             var resourceGroupForMsi = randomString("rg", 12);
 
-            Console.WriteLine("Creating resource group for msi ...");
+            Console.WriteLine($"Creating resource group {resourceGroupForMsi} ...");
 
             var msiResourceGroup = await containerServiceManager.ResourceManager.ResourceGroups.Define(resourceGroupForMsi)
                 .WithRegion(region)
                 .CreateAsync(cancellationToken);
 
-            Console.WriteLine("Creating user assigned identity ...");
+            Console.WriteLine($"Creating resource group {rgName} ...");
+            Console.WriteLine($"Creating user assigned identity {identityName} ...");
 
             var identity = await msiManager.Identities.Define(identityName)
                 .WithRegion(region)
@@ -58,7 +59,7 @@ namespace test
                 .WithAccessToCurrentResourceGroup(BuiltInRole.Contributor)
                 .CreateAsync(cancellationToken);
 
-            Console.WriteLine("Creating managed cluster ...");
+            Console.WriteLine($"Creating managed cluster {aksName} ...");
 
             var managedCluster = new ManagedClusterInner()
             {

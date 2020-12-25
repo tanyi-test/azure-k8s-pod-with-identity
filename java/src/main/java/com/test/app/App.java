@@ -52,13 +52,14 @@ public class App {
 
         String resourceGroupForMsi = random("rg", 12);
 
-        System.out.println("Creating resource group for msi ...");
+        System.out.printf("Creating resource group %s ...%n", resourceGroupForMsi);
 
         ResourceGroup msiResourceGroup = azure.resourceGroups().define(resourceGroupForMsi)
                 .withRegion(region)
                 .create();
 
-        System.out.println("Creating user assigned identity ...");
+        System.out.printf("Creating resource group %s ...%n", rgName);
+        System.out.printf("Creating user assigned identity %s ...%n", identityName);
 
         Identity identity = azure.identities().define(identityName)
                 .withRegion(region)
@@ -67,7 +68,7 @@ public class App {
                 .withAccessToCurrentResourceGroup(BuiltInRole.CONTRIBUTOR)
                 .create();
 
-        System.out.println("Creating managed cluster ...");
+        System.out.printf("Creating managed cluster %s ...%n", aksName);
 
         ManagedClusterInner managedCluster = new ManagedClusterInner()
                 .withAgentPoolProfiles(Collections.singletonList(
