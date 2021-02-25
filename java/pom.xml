@@ -11,7 +11,7 @@
         <dependency>
             <groupId>com.azure.resourcemanager</groupId>
             <artifactId>azure-resourcemanager</artifactId>
-            <version>2.2.0-beta.1</version>
+            <version>2.2.0</version>
         </dependency>
         <dependency>
             <groupId>com.azure</groupId>
@@ -49,8 +49,8 @@
                     <compilerArgs>
                         <arg>-Xlint:unchecked</arg>
                     </compilerArgs>
-                    <source>9</source>
-                    <target>9</target>
+                    <source>8</source>
+                    <target>8</target>
                     <encoding>UTF-8</encoding>
                 </configuration>
             </plugin>
